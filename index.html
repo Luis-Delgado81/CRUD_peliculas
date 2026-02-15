@@ -3,130 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Películas</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <title>Concord Films</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="./estilo.css">
 </head>
 <body>
-<!-- HEADER/NAVBAR -->
-<nav class="navbar navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1"><i class="bi bi-film"></i> CineFlix</span>
-        <div class="d-flex gap-2">
-            <span class="userLogged text-white h2">usuarioActual</span>
-            <button id="btnAgregar" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalPelicula" style="display: none;">
-                <i class="bi bi-plus-circle"></i> Agregar Película
-            </button>
-            <button id="btnSalir" class="btn btn-danger" style="display: none;">
-                <i class="bi bi-box-arrow-right"></i> SALIR
-            </button>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdd">
-                <i class="bi bi-plus-circle"></i>
-                Agregar pelicula
-            </button>
-            <button id="btnEntrar" class="btn btn-primary">
-                <i class="bi bi-box-arrow-in-right"></i> ENTRAR
-            </button>
-        </div>
-    </div>
-</nav>
-
-<!-- SECCIÓN DE LOGIN Y REGISTRO -->
-<section id="loginSection" class="login-container">
-    <div class="login-card">
-        <h2 class="text-center mb-4"><i class="bi bi-film"></i> Cineflix</h2>
-
-        <!-- TABS PARA LOGIN/REGISTRO -->
-        <ul class="nav nav-tabs mb-4" id="authTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">
-                    <i class="bi bi-box-arrow-in-right"></i> Login
+    <!--====================MENU==================-->
+    <div class="navbar navbar-dark bg-dark mb-0 sticky-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <i class="bi bi-film"></i>
+                Concord Films
+                <img src="./imagen/planeConcord.png" alt="" width="30" height="30">
+            </span>
+            <div class="d-flex gap-2">
+                <span class="userLogged  text-white h2"></span>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd">
+                    <i class="bi bi-plus-circle"></i>
+                    Agregar Pelicula
                 </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab">
-                    <i class="bi bi-person-plus"></i> Registro
+                <button id="btnEntrar" class="btn btn-primary">Entrar</button>
+                <button id="btnSalir" class="btn btn-danger" style="display:none;">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Salir
                 </button>
-            </li>
-        </ul>
-
-        <!-- CONTENIDO DE TABS -->
-        <div class="tab-content">
-            <!-- TAB LOGIN -->
-            <div class="tab-pane fade show active" id="login" role="tabpanel">
-                <form id="formLogin">
-                    <div class="mb-3">
-                        <label for="inputUser" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="inputUser" placeholder="Ingrese usuario" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputPassword" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Ingrese contraseña" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
-                    <small class="d-block text-muted mt-3">
-                        Usuarios de prueba: admin/admin123, usuario/1234, demo/demo
-                    </small>
-                </form>
-            </div>
-
-            <!-- TAB REGISTRO -->
-            <div class="tab-pane fade" id="registro" role="tabpanel">
-                <form id="formRegistro">
-                    <div class="mb-3">
-                        <label for="inputNombre" class="form-label">Nombre Completo</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Tu nombre completo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="tu@email.com" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputUserReg" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="inputUserReg" placeholder="Nombre de usuario único" required>
-                        <small class="text-muted">Mínimo 4 caracteres</small>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputPasswordReg" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="inputPasswordReg" placeholder="Mínimo 6 caracteres" required>
-                        <small class="text-muted">Debe tener al menos 6 caracteres</small>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputConfirmPassword" class="form-label">Confirmar Contraseña</label>
-                        <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirma tu contraseña" required>
-                    </div>
-                    <button type="submit" class="btn btn-success w-100">Crear Cuenta</button>
-                    <small class="d-block text-muted mt-3 text-center">
-                        ¿Ya tienes cuenta? <a href="#" id="linkLogin" class="text-decoration-none">Vuelve al Login</a>
-                    </small>
-                </form>
             </div>
         </div>
     </div>
-</section>
+    <!--====================LOGIN / REGISTER==================-->
+    <div id="loginSection" class="login-container">
+        <div class="login-card">
+            <h2 class="text-center mb-4"> <i class="bi bi-film"></i> Concord Films </h2>
+            <!--Tabs de login y registro-->
+                <ul class="nav nav-tabs mb-4" id="authTabs" role="tablist">
+                    <li class="nav-item">
+                        <button data-bs-target="#login" data-bs-toggle="tab" type="button" role="tab" id="login-tab" class="nav-link active"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+                    </li>
+                    <li class="nav-item">
+                        <button data-bs-target="#register" data-bs-toggle="tab" type="button" role="tab" id="register-tab" class="nav-link"><i class="bi bi-person-plus"></i> Register</button>
+                    </li>
+                </ul>
+                <!--Contenido de login y registro-->
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <form id="formLogin">
+                                <div class="mb-3">
+                                    <label for="inputUser" class="form-label">Usuario</label>
+                                    <input placeholder="Ingrese usuario" type="text" class="form-control" id="inputUser" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="inputPassword" class="form-label">Password</label>
+                                    <input placeholder="Ingrese contraseña" type="password" class="form-control" id="inputPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                                <!--small-->
+                                <p class="demo-note">
+                                    Cuentas demo: 
+                                    <span>admin/admin123</span> · 
+                                    <span>usuario/1234</span> · 
+                                    <span>demo/demo</span>
+                                </p>
+                            </form>
+                    </div>
+                    <div class="tab-pane fade" id="register" role="tabpanel">
+                        <form id="formRegister">
+                            <div class="mb-3">
+                                <label for="inputNombre" class="form-label">Nombre Completo</label>
+                                <input placeholder="Tu nombre completo" type="text" class="form-control" id="inputNombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputEmail" class="form-label">Correo</label>
+                                <input placeholder="tu@email" type="email" class="form-control" id="inputEmail" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputUserReg" class="form-label">Usuario</label>
+                                <input placeholder="Nombre de usuario unico" type="text" class="form-control" id="inputUserReg" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputPasswordReg" class="form-label">Password</label>
+                                <input placeholder="Minimo 6 caracteres" type="password" class="form-control" id="inputPasswordReg" required>
+                                <small class="text-muted">Debes tener al menos 6 caracteres</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputConfirmPassword" class="form-label">Confirmar Password</label>
+                                <input type="password" class="form-control" id="inputConfirmPassword" required>
+                            </div>
 
-<!-- MODAL PARA VER DETALLES -->
-<div class="modal fade" id="modalDetalles" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+                            <button type="submit" class="btn btn-success w-100">Crear Usuario</button>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!--====================SECCIN DASHBOARD==================-->
+    <div id="dashboard" style=" display: none;">
+        
+        <!--====================CARRUSEL DE PELICULAS==================-->
+            <div class="container my-4">
+                <h3 class="mb-3">PELICULAS RECIENTES</h3>
+                <div id="sliderPeliculas" class="slider-container">                  
+                        <div id="carruselMovies" class="carruselMovies">
+                            <!-- aqui van la peliculas dinamicamente-->
+                        </div>
+                </div>
+            </div>
+
+        <!--====================FILTRO DE PELICULAS==================-->
+            <div class="container my-4">
+                <div class="row g-3">
+                    <div class="col md-6">
+                        <input placeholder="Buscar pelicula..." type="text" id="inputBuscar" class="form-control" onkeyup="buscarPeliculas(this.value)">
+                    </div>
+                    <div class="col md-6">
+                        <select id="selectGenero" class="form-select">
+                            <option value="">Todos los generos</option>
+                            <option value="Accion">Accion</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Ciencia Ficcion">Ciencia Ficcion</option>
+                            <option value="Terror">Terror</option>
+                            <option value="Comedia">Comedia</option>
+                            <option value="Aventura">Aventura</option>
+                            <option value="Animado">Animado</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Suspenso">Suspenso</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+    <!--====================GRID DE PELICULAS==================-->
+        <div class="container my-4">
+            <h3 class="mb-3">TODAS LAS PELICULAS</h3>
+                <div id="gridPeliculas" class="row g-4">
+                    <!-- aqui van las peliculas dinamicamente-->
+                </div>
+                <div id="sinResultados" class="alert alert-info text-center" style="display: none;">
+                    <i class="bi bi-search"></i> No se encontraron peliculas..!
+                </div>
+        </div>
+
+    </div>
+
+    <!--====================MODAL AGREGAR PELICULAS==================-->
+    <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddLabel" aria-hidden="true">
+        <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detallesTitulo"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <h1 class="modal-title fs-5" id="modalAddLabel"><i class="bi bi-film"></i> Agregar Pelicula</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formPelicula">
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">🎦 Titulo</label>
+                        <input placeholder="Titulo de la pelicula" type="text" class="form-control" id="inputTitulo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputGenero" class="form-label">♂️ Genero</label>
+                            <select class="form-select" name="genero" id="inputGenero" required>
+                                <option value="">Selecciona Genero</option>
+                                <option value="Accion">Accion</option>
+                                <option value="Drama">Drama</option>
+                                <option value="Ciencia Ficcion">Ciencia Ficcion</option>
+                                <option value="Terror">Terror</option>
+                                <option value="Comedia">Comedia</option>
+                                <option value="Aventura">Aventura</option>
+                                <option value="Animado">Animado</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Suspenso">Suspenso</option>
+                            </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputDirector" class="form-label">🎬 Director</label>
+                        <input placeholder="Nombre del director" type="text" class="form-control" id="inputDirector" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAno" class="form-label">🗓️ Año</label>
+                        <input placeholder="2026" type="number" class="form-control" id="inputAno" min="1900" required>    
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputCalificacion" class="form-label">📝 Calificacion (1 -10)</label>
+                        <input placeholder="8,1" type="number" class="form-control" id="inputCalificacion" min = "1" max="10" step="0,5" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputSinopsis" class="form-label">🎥 Sinopsis</label>
+                        <textarea placeholder="Descripcion breve de la pelicula" class="form-control" id="inputSinopsis" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputImagen" class="form-label">🖼️ URL de la imagen</label>
+                        <input placeholder="🔗Ingresa una URL válida de imagen" type="url" class="form-control" id="inputImagen" required>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" id="btnGuardarPelicula">Guardar Pelicula</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!--======================= MODAL VER DETALLE ==========================-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="detallesTitulo"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-5">
-                        <img id="detallesImagen" src="" alt="" class="img-fluid rounded">
+                    <div class="col-md-5">   
+                        <img id="detallesImagen" src="" class="img-fluid rounded">
                     </div>
                     <div class="col-md-7">
-                        <p><strong>Género:</strong> <span id="detallesGenero"></span></p>
-                        <p><strong>Director:</strong> <span id="detallesDirector"></span></p>
-                        <p><strong>Año:</strong> <span id="detallesAno"></span></p>
-                        <p><strong>Calificación:</strong> <span id="detallesCalificacion"></span> ⭐</p>
-                        <p><strong>Descripción:</strong></p>
-                        <p id="detallesDescripcion"></p>
+                        <p><b>Genero: </b><span id="detallesGenero"></span></p>
+                        <p><b>Director: </b><span id="detallesDirector"></span></p>
+                        <p><b>Año: </b><span id="detallesAno"></span></p>
+                        <p><b>Calificacion: </b><span id="detallesCalificacion"></span>⭐</p>
+                        <p><b>Descripcion: </b><span id="detallesDescripcion"></span></p>
                     </div>
                 </div>
             </div>
@@ -134,108 +236,11 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
-    </div>
-</div>
-<!-- Sesion Dashboard -->
-<div id="Dashboard" style="display: none;">
-    <!-- FILTROS -->
-    <div class="container my-4">
-        <div class="row g-3">
-            <div class="col-md-6">
-                <input type="text" id="inputBuscar" class="form-control"
-                       placeholder="Buscar por título o director...">
-            </div>
-            <div class="col-md-6">
-                <select id="selectGenero" class="form-select">
-                    <option value="">Todos los géneros</option>
-                    <option value="Accion">Acción</option>
-                    <option value="Drama">Drama</option>
-                    <option value="Comedia">Comedia</option>
-                    <option value="Ciencia Ficcion">Ciencia Ficción</option>
-                    <option value="Terror">Terror</option>
-                    <option value="Aventura">Aventura</option>
-                </select>
-            </div>
         </div>
     </div>
 
-    <!--GIRD DE PELICULAS-->
-    <div class="container my-4">
-        <h4 class="mb-3">Todas las Peliculas</h4>
-        <div id="gridPeliculas" class="row g-4">
-            <!--aqui van las peliculas dinamicamente-->
-        </div>
-        <div id="sinResultados" class="alert alert-info text-center" style="display: none;">
-            <i class="bi bi-search"></i> No se encontraron peliculas.
 
-        </div>
-    </div>
-
-</div>
-
-<!-- Modal agregar pelicula -->
-<div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalAddLabel">Agregar pelicula</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formPelicula">
-                    <div class="mb-3">
-                        <label for="inputTitulo" class="form-label">Titulo</label>
-                        <input type="text" class="form-control" id="inputTitulo"  required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputGenero" class="form-label">Genero</label>
-                        <select class="form-select" name="Genero" id="inputGenero">
-                            <option value="">Selecione Genero</option>
-                            <option value="Accion">Accion</option>
-                            <option value="Drama">Drama</option>
-                            <option value="Ciencia Ficcion">Ciencia Ficcion</option>
-                            <option value="Terror">Terror</option>
-                            <option value="Miedo">Miedo</option>
-                            <option value="Comedia">Comedia</option>
-                            <option value="Aventura">Aventura</option>
-                            <option value="Animado">Animado</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputDirector" class="form-label">Director</label>
-                        <input type="text" class="form-control" id="inputDirector"  required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputAno" class="form-label">Año</label>
-                        <input type="number" class="form-control" id="inputAno" min="1900" required>
-
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="inputCalificacion" class="form-label">Calificacion (1-10)</label>
-                        <input type="number" class="form-control" id="inputCalificacion" min="1" max="10" step="0.1" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputDescripcion" class="form-label">Descripción</label>
-                        <textarea  id="inputDescripcion" class="form-control"rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputImagen" class="form-label">URL de imagen</label>
-                        <input type="url" class="form-control" id="inputImagen" required>
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnGuardarPelicula">
-                    Save changes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="./app.js"></script>
 </body>
 </html>
